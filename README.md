@@ -178,11 +178,11 @@ Look at the splash box below
     
     Click Edit Inbound Rules
     
-    Add rule - Rule = 100 - Type = Custom TCP - Protocol = TCP 6 - Port Range = 27017 - Source = Private Subnet IP - Allow
+    Add rule - Rule = 100 - Type = Custom TCP - Protocol = TCP 6 - Port Range = 27017 - Source = Public Subnet IP - Allow
     
-    Add rule - Rule = 110 - Type = SSH - Protocol = TCP 6 - Port Range = 22 - Source = Private Subnet IP - Allow
+    Add rule - Rule = 110 - Type = SSH - Protocol = TCP 6 - Port Range = 22 - Source = Public Subnet IP - Allow
     
-    Add rule - Rule = 120 - Type = Custom TCP - Protocol = TCP 6 - Port Range = 1024 - 65535 - Source = Private Subnet IP - Allow
+    Add rule - Rule = 120 - Type = Custom TCP - Protocol = TCP 6 - Port Range = 1024 - 65535 - Source = Public Subnet IP - Allow
     
     Click Save
     
@@ -319,8 +319,6 @@ Click Launch instance
         Add rules - SSH - Port Range = 22 - Source = Public Subnet
         
         Add rules - Custom TCP Rules - Port Range = 27017 - Source = Public Subnet
-        
-    
         
         Add rules - HTTP - Port Range = 80 - Source = 0.0.0.0/0 
     
@@ -505,3 +503,9 @@ To solve this cd into the root using
     sudo apt-get update
     
     sudo apt install dos2unix
+
+An Error I ran into 
+    
+    no connection from bastion to database 
+    
+    to solve this - change Private NetworkACL subnet ip from private to public 
