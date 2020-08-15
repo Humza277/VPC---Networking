@@ -80,6 +80,7 @@ You have Now Created a Private and Public Subnet!
 
 
 # Creating Route Tables
+
 Navigate to the VPC area within AWS
 
 On the left sidebar, scroll down till you find Route Tables and click it 
@@ -112,6 +113,7 @@ Now to add routes to your Public Route Table
 
 
 # IMPORTANT 
+
 Add a Internet Route for your Private Table, this is so you can download the packages for your Database Instance - 
 but you need to remove afterwards otherwise the whole point of a VPC is Pointless
 
@@ -137,6 +139,7 @@ Click on your Public Route Table
 You have added the Public Subnet to your Public Route Table 
 
 # Network ACL 
+
 Navigate to the VPC area within AWS
 
 On the left sidebar, scroll down till you find Network ACLs and click it 
@@ -225,6 +228,7 @@ Look at the splash box below
 
 
 # WebApp
+
 Go to the main AWS Services webpage, and type in EC2 it should pop up
 
 Click on running Instances 
@@ -278,6 +282,7 @@ Click Launch instance
         Click Launch Instance
 
 # Bastion
+
 Go to the main AWS Services webpage, and type in EC2 it should pop up
 
 Click on running Instances 
@@ -332,6 +337,7 @@ Click Launch instance
         
         
 # Database
+
 Go to the main AWS Services webpage, and type in EC2 it should pop up
 
 Click on running Instances 
@@ -404,6 +410,7 @@ To copy files across to the WebApp
         ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@WEBAPP IP HERE -i $ ./provision.sh
       
 # Error When provisioning the WebApp  
+
 The Error i encountered here 
     
     -bash: ./provision.sh: /bin/bash^M: bad interpreter: No such file or directory
@@ -436,7 +443,7 @@ To solve this cd into the root using
     
 This solves the above problems 
 
-# back to provisioning the web app 
+# Back to provisioning the web app 
 
 Now run the command
     
@@ -452,6 +459,7 @@ Congrats, your web app on port 80 is working!
 
 
 # Provisioning the Database 
+
 To do this you must move your DevOps ssh into the bastion server 
     
      scp -i ~/.ssh/DevOpsStudents.pem DevOpsStudents.pem ubuntu@BASTION IP GOES HERE:/home/ubuntu/.ssh/
@@ -481,6 +489,12 @@ nano into them and add the required data
 chmod the provision.sh
     
     chmod +x provision.sh
+    
+Once this is done
+    
+    run ./provision.sh 
+    
+This will install mongodb 
 
 # Error Provisioning the database
 
@@ -508,4 +522,35 @@ An Error I ran into
     
     no connection from bastion to database 
     
-    to solve this - change Private NetworkACL subnet ip from private to public 
+To solve this - change Private NetworkACL subnet ip from private to public 
+    
+
+# All together now - Getting posts to run 
+
+You have now provisioned the WebApp and the Database, now to get posts working you must do the following 
+
+    sudo reboot 
+On both the WebApp and Database server
+
+Once this is done, ssh into your Bastion, then into your Database 
+
+Once inside run 
+    
+    sudo systemctl start mongod
+
+The green light should display - this indicates that the DB is running 
+
+Now SSH into the WebApp and 
+    
+    cd app
+    
+    npm install
+    
+    node app.js  
+
+This will link the webapp to the db and will seed the database 
+
+Go to your WebApps IPv4 address /posts and it should be Running!
+
+
+Congratulations, you have created a VPC! 
